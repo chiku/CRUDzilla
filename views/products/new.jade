@@ -1,0 +1,3 @@
+h3 New Product
+form(action='/products/', method='POST')
+  div!= partial('_form', {locals: {product: product}})

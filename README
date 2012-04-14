@@ -1,0 +1,8 @@
+* Start mongodb deamon
+sudo /etc/rc.d/mongodb --nojournal --noprealloc start
+
+* Start mongodb server
+mongos --configdb http://127.0.0.1:27017/db
+
+* Start node application
+node app.js
