@@ -1,9 +1,15 @@
 {
-    "name": "application-name"
+    "name": "CRUDzilla"
+  , "description" : "A proof of concept of sharing server and client code"
+  , "author" : "Chirantan Mitra <chirantan.mitra@gmail.com>"
   , "version": "0.0.1"
   , "private": true
   , "dependencies": {
       "express": "2.5.8"
-    , "jade": ">= 0.0.1"
+    , "jade": ">= 0.22.0"
+    , "mongoose": ">= 2.5.13"
+  }
+  , "devDependencies": {
+      "should": "0.6.0"
   }
 }
