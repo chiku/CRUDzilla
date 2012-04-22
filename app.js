@@ -30,28 +30,11 @@ app.get('/products', function(request, response){
   });
 });
 
-app.get('/products/:id', function(request, response){
-  ProductStore.findById(request.params.id, function(error, product){
-    response.render('products/show', {
-      locals: {
-        product: product
-      }
-    })
-  });
-});
-
 app.get('/products/new', function(request, response) {
   response.render('products/new', {
     locals: {
       product: request.body && request.body.product || new ProductStore()
     }
-  });
-});
-
-app.post('/products', function(request, response) {
-  var product = new ProductStore(request.body.product);
-  product.save(function(){
-    response.redirect('/products/' + product._id.toHexString());
   });
 });
 
@@ -65,6 +48,24 @@ app.get('/products/:id/edit', function(request, response){
     });    
   });
 });
+
+app.get('/products/:id', function(request, response){
+  ProductStore.findById(request.params.id, function(error, product){
+    response.render('products/show', {
+      locals: {
+        product: product
+      }
+    })
+  });
+});
+
+app.post('/products', function(request, response) {
+  var product = new ProductStore(request.body.product);
+  product.save(function(){
+    response.redirect('/products/' + product._id.toHexString());
+  });
+});
+
 
 app.put('/products/:id', function(request, response){
   ProductStore.findById(request.params.id, function(error, product) {
