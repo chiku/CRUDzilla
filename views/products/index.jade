@@ -1,9 +1,22 @@
 extends ../layout
 
 block append content
-  h3 Products:
-    #products
-    - each product in products
-      include _product
-  p
-    a(href='/products/new') New product
+    h3 Products
+
+    table(class='pure-table pure-table-bordered')
+        thead
+            tr
+            th Name
+            th Description
+            th Price
+            td Actions
+        - each product in products
+            tbody
+                td
+                    a(href= '/products/' + product._id)= product.name
+                td= product.description
+                td= product.price
+                td
+                    a(href= '/products/' + product._id + '/edit', class='pure-button') Edit
+
+    a(href='/products/new', class='pure-button pure-button-primary') New product
