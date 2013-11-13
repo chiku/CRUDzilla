@@ -3,3 +3,6 @@ mongod --nojournal --noprealloc --dbpath db/
 
 # Start node application
 node app.js
+
+# Run tests
+npm test
