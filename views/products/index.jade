@@ -1,4 +1,9 @@
-h3 Products:
-  #products!= partial('_product', {collection: products})
-p
-  a(href='/products/new') New product
+extends ../layout
+
+block append content
+  h3 Products:
+    #products
+    - each product in products
+      include _product
+  p
+    a(href='/products/new') New product

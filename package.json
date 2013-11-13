@@ -1,18 +1,19 @@
 {
-    "name": "CRUDzilla"
-  , "description" : "A proof of concept of sharing server and client code"
-  , "author" : "Chirantan Mitra <chirantan.mitra@gmail.com>"
-  , "version": "0.0.1"
-  , "private": true
-  , "dependencies": {
-      "express": "2.5.8"
-    , "jade": ">= 0.22.0"
-    , "mongoose": ">= 2.5.13"
-  }
-  , "devDependencies": {
-      "should": "0.6.0"
-  }
-  , "scripts": {
-    "test": "make test"
-  }
+    "author": "Chirantan Mitra <chirantan.mitra@gmail.com>", 
+    "dependencies": {
+        "express": "3.x", 
+        "jade": "0.28.x", 
+        "mongoose": "3.x"
+    }, 
+    "description": "A proof of concept of sharing server and client code", 
+    "devDependencies": {
+        "mocha": "1.x", 
+        "should": "1.2.x"
+    }, 
+    "name": "CRUDzilla", 
+    "private": true, 
+    "scripts": {
+        "test": "make test"
+    }, 
+    "version": "0.0.1"
 }

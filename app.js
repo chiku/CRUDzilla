@@ -1,8 +1,8 @@
-var express = require('express')
-  , app = express.createServer()
-  , util = require('util')
-  , mongoose = require('mongoose')
-  , db = mongoose.connect('mongodb://localhost:27017/db');
+var express = require('express'),
+    app = express(),
+    util = require('util'),
+    mongoose = require('mongoose'),
+    db = mongoose.connect('mongodb://localhost:27017/db');
 
 app.configure(function(){
   app.use(express.logger());
@@ -14,9 +14,10 @@ app.configure(function(){
 
 app.set('views', __dirname + '/views'); 
 app.set('view engine', 'jade');
+app.set("view options", { layout: "layout.jade" });
 
-var Product = require ('./lib/product').Product
-  , ProductStore = db.model('Product');
+var Product = require ('./lib/product').Product,
+    ProductStore = db.model('Product');
 
 app.get('/', function(request, response) {
   response.redirect('/products');
@@ -24,17 +25,16 @@ app.get('/', function(request, response) {
 
 app.get('/products', function(request, response){
   ProductStore.find(function(error, products){
-    response.render('products/index', {locals: {
+    response.render('products/index', {
       products: products
-    }});
+    });
   });
 });
 
 app.get('/products/new', function(request, response) {
+  var product = (request.body && request.body.product) || new ProductStore();
   response.render('products/new', {
-    locals: {
-      product: request.body && request.body.product || new ProductStore()
-    }
+    product: product
   });
 });
 
@@ -42,9 +42,7 @@ app.get('/products/:id/edit', function(request, response){
   var product = ProductStore.find(request.params.id);
   ProductStore.findById(request.params.id, function(error, product){
     response.render('products/edit', {
-      locals: {
-        product: product
-      }
+      product: product
     });    
   });
 });
@@ -52,9 +50,7 @@ app.get('/products/:id/edit', function(request, response){
 app.get('/products/:id', function(request, response){
   ProductStore.findById(request.params.id, function(error, product){
     response.render('products/show', {
-      locals: {
-        product: product
-      }
+      product: product
     })
   });
 });
@@ -69,10 +65,11 @@ app.post('/products', function(request, response) {
 
 app.put('/products/:id', function(request, response){
   ProductStore.findById(request.params.id, function(error, product) {
-    product.name = request.body.product.name;
-    product.description = request.body.product.description;
-    product.price = request.body.product.price;
-    product.save(function(){
+    var submittedProduct = request.body.product;
+    product.name = submittedProduct.name;
+    product.description = submittedProduct.description;
+    product.price = submittedProduct.price;
+    product.save(function() {
       response.redirect('/products/' + product._id.toHexString());
     });
   });

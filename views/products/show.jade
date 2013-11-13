@@ -1,9 +1,12 @@
-h3 Showing #{product.name}
-p product.description
-p Price #{product.price}
+extends ../layout
 
-p
-  a(href= '/products') Back
+block append content
+  h3 Showing #{product.name}
+  p #{product.description}
+  p Price #{product.price}
 
-p 
-  a(href='/products/'+product._id + '/edit') Edit
+  p
+    a(href= '/products') Back
+
+  p
+    a(href='/products/'+product._id + '/edit') Edit
