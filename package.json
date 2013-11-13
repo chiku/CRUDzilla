@@ -12,6 +12,10 @@
     }, 
     "name": "CRUDzilla", 
     "private": true, 
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/chiku/CRUDzilla.git"
+    },
     "scripts": {
         "test": "make test"
     }, 
