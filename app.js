@@ -1,6 +1,5 @@
 var express = require('express'),
     app = express(),
-    util = require('util'),
     mongoose = require('mongoose'),
     db = mongoose.connect('mongodb://localhost:27017/db');
 
@@ -41,7 +40,6 @@ app.get('/products/new', function(request, response) {
 });
 
 app.get('/products/:id/edit', function(request, response) {
-    var product = ProductStore.find(request.params.id);
     ProductStore.findById(request.params.id, function(error, product) {
         response.render('products/edit', {
             product: product
