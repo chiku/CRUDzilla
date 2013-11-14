@@ -53,7 +53,7 @@ app.get('/products/:id', function(request, response) {
     ProductStore.findById(request.params.id, function(error, product) {
         response.render('products/show', {
             product: product
-        })
+        });
     });
 });
 
