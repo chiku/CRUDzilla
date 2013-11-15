@@ -35,9 +35,7 @@ describe("Product", function() {
         });
 
         it("doesn't have any errors", function() {
-            var product = Factory.product();
-            product.isValid();
-            product.errors().should.be.empty;
+            Factory.product().errors().should.be.empty;
         });
     });
 
@@ -47,9 +45,7 @@ describe("Product", function() {
         });
 
         it("has an error", function() {
-            var product = Factory.product({ name: undefined });
-            product.isValid();
-            product.errors().should.include("Name can't be blank");
+            Factory.product({ name: undefined }).errors().should.include("Name can't be blank");
         });
     });
 
@@ -59,16 +55,47 @@ describe("Product", function() {
         });
 
         it("has an error", function() {
-            var product = Factory.product({ price: 'blah' });
-            product.isValid();
-            product.errors().should.include("Price must be a number");
+            Factory.product({ price: 'blah' }).errors().should.include("Price must be a number");
         });
 
-        it("becomes valid after error is fixed", function() {
+        it("becomes valid after the error is fixed", function() {
             var product = Factory.product({ price: 'blah' });
             product.isValid().should.be.false;
             product.set('price', 10);
             product.isValid().should.be.true;
+        });
+    });
+
+    describe("#validated", function() {
+        describe("when created", function() {
+            it("is not validated", function() {
+                Factory.product({ price: undefined }).isValidated().should.be.false;
+            });
+        });
+
+        describe("when validated after creation", function() {
+            it("is validated", function() {
+                var product = Factory.product({ price: undefined });
+                product.isValid();
+                product.isValidated().should.be.true;
+            });
+        });
+
+        describe("when an attribute is set", function() {
+            it("is not validated", function() {
+                var product = Factory.product({ price: undefined });
+                product.set({ price: 30 });
+                product.isValidated().should.be.false;
+            });
+        });
+
+        describe("when validated after setting an attribute", function() {
+            it("is validated", function() {
+                var product = Factory.product({ price: undefined });
+                product.set({ price: 30 });
+                product.isValid();
+                product.isValidated().should.be.true;
+            });
         });
     });
 });
