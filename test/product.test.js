@@ -45,7 +45,8 @@ describe("Product", function() {
         });
 
         it("has an error", function() {
-            Factory.product({ name: undefined }).errors().should.include("Name can't be blank");
+            var errors = Factory.product({ name: undefined }).errors();
+            errors.should.includeEql({ attribute: "name", value: undefined, message: "Name can't be blank" });
         });
     });
 
@@ -55,7 +56,8 @@ describe("Product", function() {
         });
 
         it("has an error", function() {
-            Factory.product({ price: 'blah' }).errors().should.include("Price must be a number");
+            var errors = Factory.product({ price: "blah" }).errors();
+            errors.should.includeEql({ attribute: "price", value: "blah", message: "Price must be a number" });
         });
 
         it("becomes valid after the error is fixed", function() {
