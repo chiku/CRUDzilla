@@ -3,20 +3,29 @@ extends ../layout
 block append content
     h3 Products
 
-    table(class='pure-table pure-table-bordered')
-        thead
-            tr
-                th Name
-                th Description
-                th Price
-                td Actions
-        - each product in products
-            tbody
-                td
-                    a(href= '/products/' + product._id)= product.name
-                td= product.description
-                td= product.price
-                td
-                    a(href= '/products/' + product._id + '/edit', class='pure-button') Edit
+    .pure-g-r
+        .pure-u-1-8(class='product-header')
+            strong Name
+        .pure-u-1-6(class='product-header')
+            strong Description
+        .pure-u-1-8(class='product-header')
+            strong Price
+        .pure-u-1-6(class='product-header')
+            strong Actions
+
+    - each product in products
+        .pure-g-r
+            .pure-u-1-8(class='product-item')
+                a(href= '/products/' + product._id)= product.name
+            .pure-u-1-6(class='product-item')= product.description
+            .pure-u-1-8(class='product-item')= product.price
+            .pure-u-1-6(class='product-item')
+                .pure-g-r
+                    .pure-u-1-3
+                        a(href= '/products/' + product._id + '/edit', class='pure-button') Edit
+                    .pure-u-1-2
+                        form(action='/products/'+product._id, method='POST')
+                            input(type='hidden', name='_method', value='delete')
+                            button(type='submit', class='pure-button') Delete
 
     a(href='/products/new', class='pure-button pure-button-primary') New product

@@ -1,3 +1,19 @@
 body {
-  padding: 50px;
+    padding: 50px;
+}
+
+.product-header {
+    padding: 0.2em;;
+    font-weight: bold;
+    background-color: #E6E6E6;
+}
+
+.product-item {
+    padding: 0.2em;
+}
+
+.error {
+    font-weight: bold;
+    color: #cc0404;
+    padding: 0.2em;
 }

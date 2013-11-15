@@ -33,16 +33,18 @@ app.get('/products', function(request, response) {
 });
 
 app.get('/products/new', function(request, response) {
-    var product = (request.body && request.body.product) || new ProductStore();
+    var product = new ProductStore();
     response.render('products/new', {
-        product: product
+        product: product,
+        errors: {}
     });
 });
 
 app.get('/products/:id/edit', function(request, response) {
     ProductStore.findById(request.params.id, function(error, product) {
         response.render('products/edit', {
-            product: product
+            product: product,
+            errors: {}
         });
     });
 });
@@ -56,21 +58,54 @@ app.get('/products/:id', function(request, response) {
 });
 
 app.post('/products', function(request, response) {
-    var product = new ProductStore(request.body.product);
-    product.save(function() {
-        response.redirect('/products/' + product._id.toHexString());
-    });
+    var product = new ProductStore(request.body.product),
+        submittedProduct = new Product(request.body.product);
+
+    product.name = submittedProduct.get("name");
+    product.description = submittedProduct.get("description");
+    product.price = submittedProduct.get("price");
+
+    var errors = submittedProduct.errors();
+
+    if (submittedProduct.isValid()) {
+        product.save(function() {
+            response.redirect('/products/' + product._id.toHexString());
+        });
+    } else {
+        response.render('products/new', {
+            product: product,
+            errors: errors
+        });
+    }
 });
 
 app.put('/products/:id', function(request, response) {
     ProductStore.findById(request.params.id, function(error, product) {
-        var submittedProduct = request.body.product;
-        product.name = submittedProduct.name;
-        product.description = submittedProduct.description;
-        product.price = submittedProduct.price;
-        product.save(function() {
-            response.redirect('/products/' + product._id.toHexString());
-        });
+        var submittedProduct = new Product(request.body.product);
+
+        product.name = submittedProduct.get("name");
+        product.description = submittedProduct.get("description");
+        product.price = submittedProduct.get("price");
+
+        var errors = submittedProduct.errors();
+
+        if (submittedProduct.isValid()) {
+            product.save(function() {
+                response.redirect('/products/' + product._id.toHexString());
+            });
+        } else {
+            response.render('products/edit', {
+                product: product,
+                errors: errors
+            });
+        }
+    });
+});
+
+app.delete('/products/:id', function(request, response) {
+    ProductStore.findById(request.params.id, function(error, product) {
+        product.remove();
+        response.redirect('/products');
     });
 });
 

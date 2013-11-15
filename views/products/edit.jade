@@ -4,6 +4,9 @@ block append content
     form(action='/products/'+product._id, method='POST', class='pure-form pure-form-aligned')
         input(type='hidden', name='_method', value='put')
 
+        - each error in errors
+            .error= error.message
+
         fieldset
             legend
                 | Editing #{product.name}
