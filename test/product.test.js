@@ -67,37 +67,37 @@ describe("Product", function() {
             product.isValid().should.be.true;
         });
     });
-
-    describe("#validated", function() {
-        describe("when created", function() {
-            it("is not validated", function() {
-                Factory.product({ price: undefined }).isValidated().should.be.false;
-            });
-        });
-
-        describe("when validated after creation", function() {
-            it("is validated", function() {
-                var product = Factory.product({ price: undefined });
-                product.isValid();
-                product.isValidated().should.be.true;
-            });
-        });
-
-        describe("when an attribute is set", function() {
-            it("is not validated", function() {
-                var product = Factory.product({ price: undefined });
-                product.set({ price: 30 });
-                product.isValidated().should.be.false;
-            });
-        });
-
-        describe("when validated after setting an attribute", function() {
-            it("is validated", function() {
-                var product = Factory.product({ price: undefined });
-                product.set({ price: 30 });
-                product.isValid();
-                product.isValidated().should.be.true;
-            });
-        });
-    });
+    //
+    // describe("#validated", function() {
+    //     describe("when created", function() {
+    //         it("is not validated", function() {
+    //             Factory.product({ price: undefined }).isValidated().should.be.false;
+    //         });
+    //     });
+    //
+    //     describe("when validated after creation", function() {
+    //         it("is validated", function() {
+    //             var product = Factory.product({ price: undefined });
+    //             product.isValid();
+    //             product.isValidated().should.be.true;
+    //         });
+    //     });
+    //
+    //     describe("when an attribute is set", function() {
+    //         it("is not validated", function() {
+    //             var product = Factory.product({ price: undefined });
+    //             product.set({ price: 30 });
+    //             product.isValidated().should.be.false;
+    //         });
+    //     });
+    //
+    //     describe("when validated after setting an attribute", function() {
+    //         it("is validated", function() {
+    //             var product = Factory.product({ price: undefined });
+    //             product.set({ price: 30 });
+    //             product.isValid();
+    //             product.isValidated().should.be.true;
+    //         });
+    //     });
+    // });
 });

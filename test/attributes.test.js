@@ -34,8 +34,7 @@ describe("Attribute", function() {
                 var attributes = new Attributes({
                     foo: { mandatory: true }
                 });
-                attributes.validate();
-                attributes.errors.should.not.be.empty;
+                attributes.errors().should.not.be.empty;
             });
         });
 
@@ -46,8 +45,7 @@ describe("Attribute", function() {
                     bar: { value: undefined }
                 });
                 attributes.set('foo', 'foo value');
-                attributes.validate();
-                attributes.errors.should.be.empty;
+                attributes.errors().should.be.empty;
             });
         });
 
@@ -56,8 +54,7 @@ describe("Attribute", function() {
                 var attributes = new Attributes({
                     foo: { value: "10foo", numerical: true }
                 });
-                attributes.validate();
-                attributes.errors.should.not.be.empty;
+                attributes.errors().should.not.be.empty;
             });
         });
 
@@ -67,8 +64,7 @@ describe("Attribute", function() {
                     bar: { numerical: 10 }
                 });
                 attributes.set('bar', -10.0);
-                attributes.validate();
-                attributes.errors.should.be.empty;
+                attributes.errors().should.be.empty;
             });
         });
     });
