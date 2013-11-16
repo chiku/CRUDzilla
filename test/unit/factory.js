@@ -1,6 +1,6 @@
 "use strict";
 
-var Product = require("../lib/product").Product,
+var Product = require("../../lib/product").Product,
     _ = require("lodash");
 
 var Factory = {

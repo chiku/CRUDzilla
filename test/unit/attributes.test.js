@@ -1,7 +1,7 @@
 "use strict";
 
 var should = require("should"),
-    Attributes = require("../lib/attributes").Attributes;
+    Attributes = require("../../lib/attributes").Attributes;
 
 describe("Attribute", function() {
     describe("#set", function() {
@@ -44,7 +44,7 @@ describe("Attribute", function() {
                 attributes = new Attributes({
                     foo: { mandatory: true }
                 });
-            })
+            });
 
             it("is not valid", function() {
                 attributes.isValid().should.be.false;
@@ -98,7 +98,7 @@ describe("Attribute", function() {
                     bar: { numerical: 10 }
                 });
                 attributes.set('bar', -10.0);
-            })
+            });
 
             it("is valid", function() {
                 attributes.isValid().should.be.true;

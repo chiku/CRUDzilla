@@ -1,7 +1,7 @@
 "use strict";
 
 var should = require("should"),
-    Product = require("../lib/product").Product,
+    Product = require("../../lib/product").Product,
     Factory = require("./factory").Factory;
 
 describe("Product", function() {

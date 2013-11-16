@@ -1,7 +1,7 @@
 "use strict";
 
 var should = require("should"),
-    Errors = require("../lib/errors").Errors;
+    Errors = require("../../lib/errors").Errors;
 
 describe("Errors", function() {
     describe("#isPresent", function() {

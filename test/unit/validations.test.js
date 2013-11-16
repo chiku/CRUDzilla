@@ -1,7 +1,7 @@
 "use strict";
 
 var should = require("should"),
-    Validations = require("../lib/validations").Validations;
+    Validations = require("../../lib/validations").Validations;
 
 describe("Mandatory validations", function() {
     it("add to errors when value is empty string", function() {

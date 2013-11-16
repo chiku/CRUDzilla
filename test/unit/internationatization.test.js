@@ -1,13 +1,13 @@
 "use strict";
 
 var should = require("should"),
-    i18l = require("../lib/internationalization").i18l;
+    i18l = require("../../lib/internationalization").i18l;
 
 describe("Internationalization", function() {
     describe("when referred by token and language", function() {
         it("fetches the token for the language", function() {
             i18l("nameMissing", "en-US").should.equal("Name can't be blank");
-        })
+        });
     });
 
     describe("when referred by token", function() {
