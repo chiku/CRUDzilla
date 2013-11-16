@@ -1,8 +1,9 @@
 "use strict";
 
-var Product = require("../lib/product").Product;
+var Product = require("../lib/product").Product,
+    _ = require("lodash");
 
-var Factory =  {
+var Factory = {
     properties: {
         Product: function() {
             return {
@@ -18,12 +19,12 @@ var Factory =  {
 
     create: function(type, name, overrides) {
         var properties = new this.properties[name];
-        for (var attr in overrides) {
-            if (overrides.hasOwnProperty(attr)) {
-                properties[attr] = overrides[attr];
-            }
-        }
-        return new (type)(properties);
+
+        _(overrides).each(function(value, key) {
+            properties[key] = value;
+        });
+
+        return new(type)(properties);
     },
 };
 
