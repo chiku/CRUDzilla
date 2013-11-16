@@ -39,41 +39,116 @@ describe("Attribute", function() {
 
     describe("#validate", function() {
         describe("when missing a mandatory attribute", function() {
-            it("has errors", function() {
-                var attributes = new Attributes({
+            var attributes;
+            before(function() {
+                attributes = new Attributes({
                     foo: { mandatory: true }
                 });
+            })
+
+            it("is not valid", function() {
+                attributes.isValid().should.be.false;
+            });
+
+            it("has errors", function() {
                 attributes.errors().should.not.be.empty;
             });
         });
 
-        describe("when all mandatory attribute are present", function() {
-            it("has no error", function() {
-                var attributes = new Attributes({
+        describe("when all mandatory attributes are present", function() {
+            var attributes;
+            before(function() {
+                attributes = new Attributes({
                     foo: { mandatory: true },
                     bar: { value: undefined }
                 });
                 attributes.set('foo', 'foo value');
+            });
+
+            it("is valid", function() {
+                attributes.isValid().should.be.true;
+            });
+
+            it("has no error", function() {
                 attributes.errors().should.be.empty;
             });
         });
 
         describe("when a numerical attribute is a string", function() {
-            it("is has errors", function() {
-                var attributes = new Attributes({
+            var attributes;
+            before(function() {
+                attributes = new Attributes({
                     foo: { value: "10foo", numerical: true }
                 });
+            });
+
+            it("is is not valid", function() {
+                attributes.isValid().should.not.be.true;
+            });
+
+            it("is has errors", function() {
                 attributes.errors().should.not.be.empty;
             });
         });
 
-        describe("when all numerical attribute are number", function() {
-            it("is has no errors", function() {
-                var attributes = new Attributes({ foo: { value: undefined },
+        describe("when all numerical attributes are numbers", function() {
+            var attributes;
+            before(function () {
+                attributes = new Attributes({ foo: { value: undefined },
                     bar: { numerical: 10 }
                 });
                 attributes.set('bar', -10.0);
+            })
+
+            it("is valid", function() {
+                attributes.isValid().should.be.true;
+            });
+
+            it("is has no errors", function() {
                 attributes.errors().should.be.empty;
+            });
+        });
+    });
+
+    describe("#validated", function() {
+        describe("when created", function() {
+            it("is not validated", function() {
+                var attributes = new Attributes({ foo: { value: undefined },
+                    bar: { numerical: 10 }
+                });
+                attributes.isValidated().should.be.false;
+            });
+        });
+
+        describe("when validated after creation", function() {
+            it("is validated", function() {
+                var attributes = new Attributes({ foo: { value: undefined },
+                    bar: { numerical: 10 }
+                });
+                attributes.errors();
+                attributes.isValidated().should.be.true;
+            });
+        });
+
+        describe("when an attribute is set", function() {
+            it("is not validated", function() {
+                var attributes = new Attributes({ foo: { value: undefined },
+                    bar: { numerical: 10 }
+                });
+                attributes.errors();
+                attributes.set("foo", "foo value");
+                attributes.isValidated().should.be.false;
+            });
+        });
+
+        describe("when validated after setting an attribute", function() {
+            it("is validated", function() {
+                var attributes = new Attributes({ foo: { value: undefined },
+                    bar: { numerical: 10 }
+                });
+                attributes.set("foo", "foo value");
+                attributes.errors();
+                attributes.isValidated().should.be.true;
             });
         });
     });
