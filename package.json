@@ -3,7 +3,8 @@
     "dependencies": {
         "express": "3.x", 
         "jade": "0.28.x", 
-        "mongoose": "3.x"
+        "mongoose": "3.x",
+        "lodash": "x"
     }, 
     "description": "A proof of concept of sharing server and client code", 
     "devDependencies": {

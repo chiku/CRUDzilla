@@ -26,6 +26,15 @@ describe("Attribute", function() {
                 attributes.get('foo').should.equal('another foo value');
             });
         });
+
+        describe("when set for another value", function() {
+            it("doesn't mutate the earlier value", function() {
+                var attributes = new Attributes();
+                attributes.set('foo', 'foo value');
+                attributes.set('bar', 'bar value');
+                attributes.get('foo').should.equal('foo value');
+            });
+        });
     });
 
     describe("#validate", function() {
