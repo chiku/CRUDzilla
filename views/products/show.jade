@@ -3,24 +3,24 @@ extends ../layout
 block append content
     h3 Showing #{product.name}
 
-    p
-        .pure-g
-            .pure-u-1-6 Name
-            .pure-u-1-6
-                strong= product.name
-        .pure-g
-            .pure-u-1-6 Description
-            .pure-u-1-6
-                strong= product.description
-        .pure-g
-            .pure-u-1-6 Price
-            .pure-u-1-6
-                 strong= product.price
+    .pure-g
+        .pure-u-1-6 Name
+        .pure-u-1-6
+            strong= product.name
+    .pure-g
+        .pure-u-1-6 Description
+        .pure-u-1-6
+            strong= product.description
+    .pure-g
+        .pure-u-1-6 Price
+        .pure-u-1-6
+             strong= product.price
 
-    p
-        .pure-g
-            .pure-u-1-8
-                a(href='/products/'+product._id + '/edit', class='pure-button pure-button-primary') Edit
+    br
 
-            .pure-u-1-8
-                a(href= '/products', class='pure-button pure-button-primary') Back
+    .pure-g
+        .pure-u-1-8
+            a(href='/products/'+product._id + '/edit', class='pure-button pure-button-primary') Edit
+
+        .pure-u-1-8
+            a(href= '/products', class='pure-button pure-button-primary') Back
