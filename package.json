@@ -1,24 +1,27 @@
 {
-    "author": "Chirantan Mitra <chirantan.mitra@gmail.com>", 
+    "author": "Chirantan Mitra <chirantan.mitra@gmail.com>",
     "dependencies": {
-        "express": "3.x", 
-        "jade": "0.28.x", 
+        "express": "3.x",
+        "jade": "0.28.x",
+        "lodash": "x",
         "mongoose": "3.x",
-        "lodash": "x"
-    }, 
-    "description": "A proof of concept of sharing server and client code", 
+        "q": "x"
+    },
+    "description": "A proof of concept of sharing server and client code",
     "devDependencies": {
-        "mocha": "1.x", 
-        "should": "1.2.x"
-    }, 
-    "name": "CRUDzilla", 
-    "private": true, 
+        "js-beautify": "x",
+        "mocha": "1.x",
+        "should": "1.2.x",
+        "zombie": "x"
+    },
+    "name": "CRUDzilla",
+    "private": true,
     "repository": {
         "type": "git",
         "url": "http://github.com/chiku/CRUDzilla.git"
     },
     "scripts": {
-        "test": "make test"
-    }, 
+        "test": "make test.unit"
+    },
     "version": "0.0.1"
 }
