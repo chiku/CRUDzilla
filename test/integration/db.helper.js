@@ -6,10 +6,9 @@ var mongoose = require('mongoose'),
     ProductStore = db.model('Product');
 
 var helper = {
-    createProduct: function(options, callback) {
-        new ProductStore(options).save(function(error, product) {
-            callback(product);
-        });
+    createProduct: function(options) {
+        var product = new ProductStore(options);
+        return Q.ninvoke(product.save.bind(product));
     },
 
     deleteProduct: function(id) {

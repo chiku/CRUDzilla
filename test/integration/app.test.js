@@ -139,8 +139,9 @@ describe("Application", function() {
     describe("when navigating to 'Edit Product' from show page", function() {
         it("updates a product on submit", function(done) {
             var price = Math.floor(Math.random() * 70) + 30,
-                browserPromise = function(product) {
-                    browser
+                browserPromise = function(products) {
+                    var product = products[0];
+                    return browser
                         .visit("http://localhost:3000/products/" + product._id)
                         .then(assertShowProductPage({
                             "name": "Existing product",
@@ -163,25 +164,25 @@ describe("Application", function() {
                             "name": "Modified product",
                             "description": "Product description",
                             "price": price
-                        }))
-                        .then(done, done);
+                        }));
                 };
 
             helper.createProduct({
                 "name": "Existing product",
                 "description": "Product description",
                 "price": price - 10
-            }, function(product) {
-                browserPromise(product);
-            });
+            })
+            .then(browserPromise)
+            .then(done, done);
         });
     });
 
     describe("when clicking delete product from index page", function() {
         it("deletes a product on submit", function(done) {
             var price = Math.floor(Math.random() * 70) + 30,
-                browserPromise = function(product) {
-                    browser
+                browserPromise = function(products) {
+                    var product = products[0];
+                    return browser
                         .visit("http://localhost:3000/")
                         .then(assertHomePage({
                             "name": "Deletable product",
@@ -189,19 +190,18 @@ describe("Application", function() {
                             "price": price
                         }))
                         .then(clickDeleteProduct(product._id))
-                    .then(assertHomePageWithout({
-                        "name": "Deletable product"
-                    }))
-                    .then(done, done);
+                        .then(assertHomePageWithout({
+                            "name": "Deletable product"
+                        }));
                 };
 
             helper.createProduct({
                 "name": "Deletable product",
                 "description": "Product description",
                 "price": price
-            }, function(product) {
-                browserPromise(product);
-            });
+            })
+            .then(browserPromise)
+            .then(done, done);
         });
     });
 });
