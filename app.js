@@ -62,9 +62,9 @@ app.post('/products', function(request, response) {
     var product = new ProductStore(request.body.product),
         submittedProduct = new Product(request.body.product);
 
-    product.name = submittedProduct.get("name");
-    product.description = submittedProduct.get("description");
-    product.price = submittedProduct.get("price");
+    product.name = submittedProduct.name;
+    product.description = submittedProduct.description;
+    product.price = submittedProduct.price;
 
     var errors = submittedProduct.errors();
 
@@ -84,9 +84,9 @@ app.put('/products/:id', function(request, response) {
     ProductStore.findById(request.params.id, function(error, product) {
         var submittedProduct = new Product(request.body.product);
 
-        product.name = submittedProduct.get("name");
-        product.description = submittedProduct.get("description");
-        product.price = submittedProduct.get("price");
+        product.name = submittedProduct.name;
+        product.description = submittedProduct.description;
+        product.price = submittedProduct.price;
 
         var errors = submittedProduct.errors();
 
