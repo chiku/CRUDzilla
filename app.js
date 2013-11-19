@@ -7,7 +7,8 @@ app.configure(function() {
     app.use(express.logger());
     app.use(express.errorHandler());
     app.use(express.static(__dirname + '/public'));
-    app.use(express.bodyParser());
+    app.use(express.json());
+    app.use(express.urlencoded());
     app.use(express.methodOverride());
 });
 
