@@ -59,45 +59,32 @@ app.get('/products/:id', function(request, response) {
 });
 
 app.post('/products', function(request, response) {
-    var product = new ProductStore(request.body.product),
-        submittedProduct = new Product(request.body.product);
+    var product = new Product(request.body.product);
 
-    product.name = submittedProduct.name;
-    product.description = submittedProduct.description;
-    product.price = submittedProduct.price;
-
-    var errors = submittedProduct.errors();
-
-    if (submittedProduct.isValid()) {
-        product.save(function() {
+    if (product.isValid()) {
+        product.save(function(error, product) {
             response.redirect('/products/' + product._id.toHexString());
         });
     } else {
         response.render('products/new', {
             product: product,
-            errors: errors
+            errors: product.errors()
         });
     }
 });
 
 app.put('/products/:id', function(request, response) {
     ProductStore.findById(request.params.id, function(error, product) {
-        var submittedProduct = new Product(request.body.product);
+        var product = new Product(request.body.product);
 
-        product.name = submittedProduct.name;
-        product.description = submittedProduct.description;
-        product.price = submittedProduct.price;
-
-        var errors = submittedProduct.errors();
-
-        if (submittedProduct.isValid()) {
-            product.save(function() {
+        if (product.isValid()) {
+            product.save(function(error, product) {
                 response.redirect('/products/' + product._id.toHexString());
             });
         } else {
             response.render('products/edit', {
                 product: product,
-                errors: errors
+                errors: product.errors()
             });
         }
     });
