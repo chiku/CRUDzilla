@@ -31,7 +31,9 @@ describe("Application", function() {
         },
 
         assertNewProductsPage = function() {
-            browser.text("fieldset > legend").should.equal("New Product");
+            return function () {
+                browser.text("fieldset > legend").should.equal("New Product");
+            }
         },
 
         assertShowProductPage = function(options) {

@@ -2,11 +2,12 @@
 
 var should = require("should"),
     assert = require("assert"),
+    _ = require("lodash")._,
     Product = require("../../lib/product").Product,
     helper = require("./db.helper").helper;
 
 describe("Product", function() {
-    var itemsToDelete = ["test name"];
+    var itemsToDelete = ["test name", "product one", "product two"];
 
     before(function() {
         helper.cleanup(itemsToDelete);
@@ -66,6 +67,29 @@ describe("Product", function() {
                     assert(errors !== null, "Invalid product must have errors");
                 });
             });
+        });
+    });
+
+    describe(".all", function() {
+        it("includes all products", function(done) {
+            var allNames;
+
+            var assertProductAll = function() {
+                Product.all(function(error, products) {
+                    allNames = _(products).pluck("name");
+                    allNames.should.include("product one");
+                    allNames.should.include("product two");
+                });
+            };
+
+            helper.createProduct({
+                "name": "product one"
+            })
+            .then(helper.createProduct({
+                "name": "product two"
+            }))
+            .then(assertProductAll)
+            .then(done, done);
         });
     });
 });

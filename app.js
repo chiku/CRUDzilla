@@ -26,7 +26,7 @@ app.get('/', function(request, response) {
 });
 
 app.get('/products', function(request, response) {
-    ProductStore.find(function(error, products) {
+    Product.all(function(error, products) {
         response.render('products/index', {
             products: products
         });
