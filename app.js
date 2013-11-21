@@ -75,16 +75,20 @@ app.post('/products', function(request, response) {
 
 app.put('/products/:id', function(request, response) {
     ProductStore.findById(request.params.id, function(error, product) {
-        var product = new Product(request.body.product);
+        var submittedProduct = new Product(request.body.product);
 
-        if (product.isValid()) {
-            product.save(function(error, product) {
+        product.name = submittedProduct.name;
+        product.description = submittedProduct.description;
+        product.price = submittedProduct.price;
+
+        if (submittedProduct.isValid()) {
+            product.save(function() {
                 response.redirect('/products/' + product._id.toHexString());
             });
         } else {
             response.render('products/edit', {
                 product: product,
-                errors: product.errors()
+                errors: submittedProduct.errors()
             });
         }
     });

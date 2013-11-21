@@ -1,6 +1,7 @@
 "use strict";
 
 var should = require("should"),
+    assert = require("assert"),
     Product = require("../../lib/product").Product,
     helper = require("./db.helper").helper;
 
@@ -16,17 +17,55 @@ describe("Product", function() {
     });
 
     describe("#save", function() {
-        it("persists the product", function() {
-            new Product({
-                "name": "test name",
-                "description": "test description",
-                "price": 100
-            }).save(function (error, savedProduct) {
-                savedProduct._id.should.not.be.undefined;
-                savedProduct.name.should.equal("test name");
-                savedProduct.description.should.equal("test description");
-                savedProduct.price.should.equal(100);
-            })
+        describe("when valid", function() {
+            var product;
+
+            before(function() {
+                product = new Product({
+                    "name": "test name",
+                    "description": "test description",
+                    "price": 100
+                });
+            });
+
+            it("persists the product", function() {
+                product.save(function (errors, savedProduct) {
+                    savedProduct._id.should.not.be.undefined;
+                    savedProduct.name.should.equal("test name");
+                    savedProduct.description.should.equal("test description");
+                    savedProduct.price.should.equal(100);
+                });
+            });
+
+            it("doesn't have errors", function() {
+                product.save(function (errors, savedProduct) {
+                    assert(errors === null, "Valid product must not have errors");
+                });
+            });
+        });
+
+        describe("when invalid", function() {
+            var product;
+
+            before(function() {
+                product = new Product({
+                    "name": "",
+                    "description": "test description",
+                    "price": 100
+                });
+            });
+
+            it("doesn't persist the product", function() {
+                product.save(function (errors, savedProduct) {
+                    assert(savedProduct === null, "Invalid product must not be saved");
+                });
+            });
+
+            it("has errors", function() {
+                product.save(function (errors, savedProduct) {
+                    assert(errors !== null, "Invalid product must have errors");
+                });
+            });
         });
     });
 });
