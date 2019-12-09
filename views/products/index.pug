@@ -24,7 +24,8 @@ block append content
                     .pure-u-1-3
                         a(href= '/products/' + product._id + '/edit', class='pure-button') Edit
                     .pure-u-1-2
-                        form(action='/products/'+product._id, method='DELETE')
+                        form(action='/products/'+product._id, method='POST' enctype='application/x-www-form-urlencoded')
+                            input(type='hidden', name='_method', value='DELETE')
                             button(type='submit', class='pure-button') Delete
 
     a(href='/products/new', class='pure-button pure-button-primary') New product

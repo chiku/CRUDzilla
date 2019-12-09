@@ -1,13 +1,15 @@
 extends ../layout
 
 block append content
-    form(action='/products/'+product._id, method='PUT', class='pure-form pure-form-aligned')
+    form(action='/products/'+product._id, method='POST', enctype='application/x-www-form-urlencoded', class='pure-form pure-form-aligned')
+        input(type='hidden', name='_method', value='PUT')
+
         each error in errors
             .error= error.message
 
         fieldset
             legend
-                | `Editing ${product.name}`
+                | Editing #{product.name}
 
             .pure-control-group
                 label(for='product_name') Name

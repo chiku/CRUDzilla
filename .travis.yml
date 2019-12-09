@@ -5,6 +5,7 @@ node_js:
 services:
   - mongodb
 install:
+  - npm install -g npx
   - npm install
 script:
   - sleep 15
