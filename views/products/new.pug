@@ -2,7 +2,7 @@ extends ../layout
 
 block append content
     form(action='/products/', method='POST', class='pure-form pure-form-aligned')
-        - each error in errors
+        each error in errors
             .error= error.message
 
         fieldset

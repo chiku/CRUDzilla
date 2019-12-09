@@ -2,7 +2,6 @@
 
 var should = require("should"),
     assert = require("assert"),
-    _ = require("lodash")._,
     Product = require("../../lib/product").Product,
     helper = require("./db.helper").helper;
 
@@ -71,25 +70,20 @@ describe("Product", function() {
     });
 
     describe(".all", function() {
-        it("includes all products", function(done) {
-            var allNames;
-
+        it("includes all products", function() {
             var assertProductAll = function() {
                 Product.all(function(error, products) {
-                    allNames = _(products).pluck("name");
-                    allNames.should.include("product one");
-                    allNames.should.include("product two");
+                    var allNames = products.map(function(product) {
+                        return product.name;
+                    });
+                    allNames.should.containEql("product one");
+                    allNames.should.containEql("product two");
                 });
             };
 
-            helper.createProduct({
-                "name": "product one"
-            })
-            .then(helper.createProduct({
-                "name": "product two"
-            }))
-            .then(assertProductAll)
-            .then(done, done);
+            return helper.createProduct({ "name": "product one" })
+                .then(() => helper.createProduct({ "name": "product two" }))
+                .then(() => assertProductAll());
         });
     });
 });

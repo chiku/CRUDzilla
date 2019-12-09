@@ -14,7 +14,7 @@ How to
 
 * Start mongodb daemon
 ```shell
-mongod --nojournal --noprealloc --dbpath db/
+mongod --nojournal --dbpath db/
 ```
 
 * Start node application
@@ -24,10 +24,15 @@ node app.js
 
 * Run unit tests
 ```shell
-make test.unit
+npm run test:unit
 ```
 
 * Run integration tests (the server & mongodb should be up)
 ```shell
-make test.integration
+npm run test:integration
 ```
+
+License
+-------
+
+This repository is released under the MIT license. Please refer LICENSE for more details.

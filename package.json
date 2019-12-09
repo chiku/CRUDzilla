@@ -1,18 +1,20 @@
 {
     "author": "Chirantan Mitra <chirantan.mitra@gmail.com>",
     "dependencies": {
-        "express": "3.x",
-        "jade": "0.28.x",
-        "lodash": "x",
-        "mongoose": "3.x",
-        "q": "x"
+        "body-parser": "^1.19.0",
+        "errorhandler": "^1.5.1",
+        "express": "^4.17.1",
+        "lodash": "^4.17.15",
+        "mongoose": "^5.7.14",
+        "morgan": "^1.9.1",
+        "pug": "^2.0.4",
+        "q": "^1.5.1"
     },
     "description": "A proof of concept of sharing server and client code",
     "devDependencies": {
-        "js-beautify": "x",
-        "mocha": "1.x",
-        "should": "1.2.x",
-        "zombie": "x"
+        "mocha": "^6.2.2",
+        "should": "^13.2.3",
+        "zombie": "^6.1.4"
     },
     "name": "CRUDzilla",
     "private": true,
@@ -21,7 +23,10 @@
         "url": "http://github.com/chiku/CRUDzilla.git"
     },
     "scripts": {
-        "test": "make test.unit"
+        "start": "node app.js",
+        "test": "npm run test:unit && npm run test:integration",
+        "test:unit": "npx mocha -R spec test/unit/*.test.js",
+        "test:integration": "npx mocha -R spec test/integration/*.test.js --timeout 5000"
     },
     "version": "0.0.1"
 }

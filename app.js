@@ -1,25 +1,30 @@
 var express = require('express'),
     app = express(),
     mongoose = require('mongoose'),
-    db = mongoose.connect('mongodb://localhost:27017/db');
+    morgan = require('morgan'),
+    errorhandler = require('errorhandler'),
+    bodyParser = require('body-parser');
 
-app.configure(function() {
-    app.use(express.logger());
-    app.use(express.errorHandler());
-    app.use(express.static(__dirname + '/public'));
-    app.use(express.json());
-    app.use(express.urlencoded());
-    app.use(express.methodOverride());
+mongoose.connect('mongodb://localhost:27017/db', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
 });
 
+app.use(morgan('combined'));
+app.use(errorhandler());
+app.use(express.static(__dirname + '/public'));
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 app.set('views', __dirname + '/views');
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 app.set("view options", {
-    layout: "layout.jade"
+    layout: "layout.pug",
 });
 
 var Product = require('./lib/product').Product,
-    ProductStore = db.model('Product');
+    ProductStore = mongoose.model('Product');
 
 app.get('/', function(request, response) {
     response.redirect('/products');
