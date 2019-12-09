@@ -1,19 +1,19 @@
-"use strict";
+'use strict';
 
-var should = require("should"),
-    Errors = require("../../lib/errors").Errors;
+const should = require("should");
+const { Errors } = require("../../lib/errors");
 
-describe("Errors", function() {
-    describe("#isPresent", function() {
-        describe("when created", function() {
-            it("is false", function() {
+describe("Errors", () => {
+    describe("#isPresent", () => {
+        describe("when created", () => {
+            it("is false", () => {
                 new Errors().isPresent().should.equal.false;
             });
         });
 
-        describe("when a new error is added", function() {
-            it("is true", function() {
-                var errors = new Errors();
+        describe("when a new error is added", () => {
+            it("is true", () => {
+                const errors = new Errors();
                 errors.add({
                     attribute: "name",
                     value: "",
@@ -23,9 +23,9 @@ describe("Errors", function() {
             });
         });
 
-        describe("when all errors are cleared", function() {
-            it("is true", function() {
-                var errors = new Errors();
+        describe("when all errors are cleared", () => {
+            it("is true", () => {
+                const errors = new Errors();
                 errors.add({
                     attribute: "name",
                     value: "",
@@ -37,9 +37,9 @@ describe("Errors", function() {
         });
     });
 
-    describe("#all", function() {
-        it("is a list of all the errors", function() {
-            var errors = new Errors();
+    describe("#all", () => {
+        it("is a list of all the errors", () => {
+            const errors = new Errors();
             errors.add({
                 attribute: "name",
                 value: "",

@@ -1,99 +1,89 @@
-"use strict";
+'use strict';
 
-var _ = require("lodash")._,
-    Q = require("q"),
-    should = require("should"),
-    Browser = require("zombie"),
-    helper = require("./db.helper").helper;
+const Q = require("q");
+const should = require("should");
+const Browser = require("zombie");
 
-describe("Application", function() {
-    var browser = new Browser(),
+const { helper } = require("./db.helper");
 
-        assertHomePage = function(options) {
-            var html = browser.html();
-            browser.text("#header > h2").should.equal("We CRUD Products");
-            _(options || {}).each(function(value, key) {
-                html.should.containEql(value);
-            });
-        },
+describe("Application", () => {
+    const browser = new Browser();
 
-        assertHomePageWithout = function(options) {
-            var html = browser.html();
-            browser.text("#header > h2").should.equal("We CRUD Products");
-            _(options || {}).each(function(value, key) {
-                html.should.not.containEql(value);
-            });
-        },
+    const assertHomePage = (options = {}) => {
+        const html = browser.html();
+        browser.text("#header > h2").should.equal("We CRUD Products");
+        Object.keys(options).forEach((key) => {
+            const value = options[key];
+            html.should.containEql(value);
+        });
+    };
 
-        assertNewProductsPage = function() {
-            browser.text("fieldset > legend").should.equal("New Product");
-        },
+    const assertHomePageWithout = (options = {}) => {
+        const html = browser.html();
+        browser.text("#header > h2").should.equal("We CRUD Products");
+        Object.keys(options).forEach((key) => {
+            const value = options[key];
+            html.should.not.containEql(value);
+        });
+    };
 
-        assertShowProductPage = function(options) {
-            var html = browser.html();
-            html.should.containEql("Showing");
-            _(options || {}).each(function(value, key) {
-                html.should.containEql(value);
-            });
-        },
+    const assertNewProductsPage = () => {
+        browser.text("fieldset > legend").should.equal("New Product");
+    };
 
-        assertEditProductPage = function(options) {
-            var html = browser.html();
-            browser.text("fieldset > legend").should.containEql("Editing");
-            _(options || {}).each(function(value, key) {
-                html.should.containEql(value);
-            });
-        },
+    const assertShowProductPage = (options = {}) => {
+        const html = browser.html();
+        html.should.containEql("Showing");
+        Object.keys(options).forEach((key) => {
+            const value = options[key];
+            html.should.containEql(value);
+        });
+    };
 
-        clickNewProduct = function() {
-            return browser.clickLink("New product");
-        },
+    const assertEditProductPage = (options = {}) => {
+        const html = browser.html();
+        browser.text("fieldset > legend").should.containEql("Editing");
+        Object.keys(options).forEach((key) => {
+            const value = options[key];
+            html.should.containEql(value);
+        });
+    };
 
-        clickSaveProduct = function() {
-            return browser.pressButton("Create product");
-        },
+    const clickNewProduct = () => browser.clickLink("New product");
 
-        clickUpdateProduct = function() {
-            return browser.pressButton("Update product");
-        },
+    const clickSaveProduct = () => browser.pressButton("Create product");
 
-        clickEditProductOnShowPage = function() {
-            return browser.clickLink("Edit");
-        },
+    const clickUpdateProduct = () => browser.pressButton("Update product");
 
-        clickDeleteProduct = function(productId) {
-            var selector = "form[action='/products/" + productId + "'] > button";
-            return browser.pressButton(selector);
-        },
+    const clickEditProductOnShowPage = () => browser.clickLink("Edit");
 
-        fillProductsForm = function(options) {
-            return browser
-                .fill("Name", options.name)
-                .then(() => browser.fill("Description", options.description))
-                .then(() => browser.fill("Price", options.price));
-        },
+    const clickDeleteProduct = (productId) => {
+        const selector = "form[action='/products/" + productId + "'] > button";
+        return browser.pressButton(selector);
+    };
 
-        itemsToDelete = ["Brand new product", "Existing product", "Modified product", "Deletable product"];
+    const fillProductsForm = (options) => browser
+            .fill("Name", options.name)
+            .then(() => browser.fill("Description", options.description))
+            .then(() => browser.fill("Price", options.price));
+
+    const itemsToDelete = ["Brand new product", "Existing product", "Modified product", "Deletable product"];
 
 
-    before(function() {
-        helper.cleanup(itemsToDelete);
-    });
+    before(() => helper.cleanup(itemsToDelete));
 
-    after(function() {
-        helper.cleanup(itemsToDelete);
-    });
+    after(() => helper.cleanup(itemsToDelete));
 
-    describe("when landing on home page", function() {
-        it("displays product index", function() {
+    describe("when landing on home page", () => {
+        it("displays product index", () => {
             return browser
                 .visit("http://localhost:3000/")
                 .then(assertHomePage);
         });
     });
 
-    describe("when navigating to 'Add product'", function() {
-        it("creates a new product on submit", function() {
+    describe("when navigating to 'Add product'", () => {
+        it("creates a new product on submit", () => {
             return browser
                 .visit("http://localhost:3000/")
                 .then(clickNewProduct)
@@ -112,9 +102,9 @@ describe("Application", function() {
         });
     });
 
-    describe("when navigating to 'Edit Product' from show page", function() {
-        it("updates a product on submit", function() {
-            var price = Math.floor(Math.random() * 70) + 30;
+    describe("when navigating to 'Edit Product' from show page", () => {
+        it("updates a product on submit", () => {
+            const price = Math.floor(Math.random() * 70) + 30;
 
             return helper.createProduct({
                     "name": "Existing product",
@@ -147,10 +137,10 @@ describe("Application", function() {
         });
     });
 
-    describe("when clicking delete product from index page", function() {
-        it("deletes a product on submit", function() {
-            var price = Math.floor(Math.random() * 70) + 30,
-                productId;
+    describe("when clicking delete product from index page", () => {
+        it("deletes a product on submit", () => {
+            const price = Math.floor(Math.random() * 70) + 30;
+            let productId;
 
             return helper.createProduct({
                     "name": "Deletable product",

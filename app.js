@@ -1,10 +1,14 @@
-var express = require('express'),
-    app = express(),
-    mongoose = require('mongoose'),
-    morgan = require('morgan'),
-    errorhandler = require('errorhandler'),
-    bodyParser = require('body-parser'),
-    methodOverride = require('method-override');
+'use strict';
+
+const express = require('express');
+const app = express();
+const mongoose = require('mongoose');
+const morgan = require('morgan');
+const errorhandler = require('errorhandler');
+const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
+
+const { Product } = require('./lib/product');
 
 mongoose.connect('mongodb://localhost:27017/db', {
     useNewUrlParser: true,
@@ -19,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(methodOverride(function (req, res) {
   if (req.body && typeof req.body === 'object' && '_method' in req.body) {
-    var method = req.body._method;
+    const method = req.body._method;
     delete req.body._method;
     return method;
   }
@@ -31,8 +35,7 @@ app.set("view options", {
     layout: "layout.pug",
 });
 
-var Product = require('./lib/product').Product,
-    ProductStore = mongoose.model('Product');
+const ProductStore = mongoose.model('Product');
 
 app.get('/', function(request, response) {
     response.redirect('/products');
@@ -47,7 +50,7 @@ app.get('/products', function(request, response) {
 });
 
 app.get('/products/new', function(request, response) {
-    var product = new ProductStore();
+    const product = new ProductStore();
     response.render('products/new', {
         product: product,
         errors: {}
@@ -72,7 +75,7 @@ app.get('/products/:id', function(request, response) {
 });
 
 app.post('/products', function(request, response) {
-    var product = new Product(request.body.product);
+    const product = new Product(request.body.product);
 
     if (product.isValid()) {
         product.save(function(error, product) {
@@ -88,7 +91,7 @@ app.post('/products', function(request, response) {
 
 app.put('/products/:id', function(request, response) {
     ProductStore.findById(request.params.id, function(error, product) {
-        var submittedProduct = new Product(request.body.product);
+        const submittedProduct = new Product(request.body.product);
 
         product.name = submittedProduct.name;
         product.description = submittedProduct.description;

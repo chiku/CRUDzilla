@@ -1,29 +1,26 @@
-var mongoose = require('mongoose'),
-    Q = require('q'),
-    _ = require("lodash")._;
+'use strict';
 
-var connection = mongoose.createConnection('mongodb://localhost:27017/db', {
+const mongoose = require('mongoose');
+const Q = require('q');
+
+const connection = mongoose.createConnection('mongodb://localhost:27017/db', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
 
-var Product = require('../../lib/product').Product,
-    ProductStore = connection.model('Product');
+const Product = require('../../lib/product').Product;
+const ProductStore = connection.model('Product');
 
-var helper = {
-    createProduct: function(options) {
-        var product = new ProductStore(options);
+const helper = {
+    createProduct: (options) => {
+        const product = new ProductStore(options);
         return Q.ninvoke(product.save.bind(product));
     },
 
-    deleteProduct: function(id) {
-        ProductStore.findById(id, function(error, product) {
-            product.remove();
-        });
-    },
+    deleteProduct: (id) => ProductStore.findById(id, (error, product) => product.remove()),
 
-    cleanup: function(names) {
-        _(names).each(function(name) {
+    cleanup: (names) => {
+        names.forEach((name) => {
             ProductStore.deleteMany({
                 "name": name
             }).exec();

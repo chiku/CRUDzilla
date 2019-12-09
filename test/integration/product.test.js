@@ -1,35 +1,29 @@
-"use strict";
+'use strict';
 
-var should = require("should"),
-    assert = require("assert"),
-    Product = require("../../lib/product").Product,
-    helper = require("./db.helper").helper;
+const should = require("should");
+const assert = require("assert");
 
-describe("Product", function() {
-    var itemsToDelete = ["test name", "product one", "product two"];
+const { Product } = require("../../lib/product");
+const { helper } = require("./db.helper");
 
-    before(function() {
-        helper.cleanup(itemsToDelete);
-    });
+describe("Product", () => {
+    const itemsToDelete = ["test name", "product one", "product two"];
 
-    after(function() {
-        helper.cleanup(itemsToDelete);
-    });
+    before(() => helper.cleanup(itemsToDelete));
 
-    describe("#save", function() {
-        describe("when valid", function() {
-            var product;
+    after(() => helper.cleanup(itemsToDelete));
 
-            before(function() {
-                product = new Product({
-                    "name": "test name",
-                    "description": "test description",
-                    "price": 100
-                });
+    describe("#save", () => {
+        describe("when valid", () => {
+            const product = new Product({
+                "name": "test name",
+                "description": "test description",
+                "price": 100
             });
 
-            it("persists the product", function() {
-                product.save(function (errors, savedProduct) {
+
+            it("persists the product", () => {
+                product.save((errors, savedProduct) => {
                     savedProduct._id.should.not.be.undefined;
                     savedProduct.name.should.equal("test name");
                     savedProduct.description.should.equal("test description");
@@ -37,45 +31,39 @@ describe("Product", function() {
                 });
             });
 
-            it("doesn't have errors", function() {
-                product.save(function (errors, savedProduct) {
+            it("doesn't have errors", () => {
+                product.save((errors, savedProduct) => {
                     assert(errors === null, "Valid product must not have errors");
                 });
             });
         });
 
-        describe("when invalid", function() {
-            var product;
-
-            before(function() {
-                product = new Product({
-                    "name": "",
-                    "description": "test description",
-                    "price": 100
-                });
+        describe("when invalid", () => {
+            const product = new Product({
+                "name": "",
+                "description": "test description",
+                "price": 100
             });
 
-            it("doesn't persist the product", function() {
-                product.save(function (errors, savedProduct) {
+            it("doesn't persist the product", () => {
+                product.save((errors, savedProduct) => {
                     assert(savedProduct === null, "Invalid product must not be saved");
                 });
             });
 
-            it("has errors", function() {
-                product.save(function (errors, savedProduct) {
+            it("has errors", () => {
+                product.save((errors, savedProduct) => {
                     assert(errors !== null, "Invalid product must have errors");
                 });
             });
         });
     });
 
-    describe(".all", function() {
-        it("includes all products", function() {
-            var assertProductAll = function() {
-                Product.all(function(error, products) {
-                    var allNames = products.map(function(product) {
-                        return product.name;
-                    });
+    describe(".all", () => {
+        it("includes all products", () => {
+            const assertProductAll = () => {
+                Product.all((error, products) => {
+                    const allNames = products.map((product) => product.name);
                     allNames.should.containEql("product one");
                     allNames.should.containEql("product two");
                 });

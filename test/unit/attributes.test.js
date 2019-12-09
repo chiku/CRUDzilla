@@ -1,28 +1,29 @@
-"use strict";
+'use strict';
 
-var should = require("should"),
-    Attributes = require("../../lib/attributes").Attributes;
+const should = require("should");
 
-describe("Attribute", function() {
-    describe("#set", function() {
-        it("retrieves created attributes", function() {
-            var attributes = new Attributes({
+const { Attributes } = require("../../lib/attributes");
+
+describe("Attribute", () => {
+    describe("#set", () => {
+        it("retrieves created attributes", () => {
+            const attributes = new Attributes({
                 foo: { value: 'foo value' }
             });
             attributes.foo.should.equal('foo value');
         });
 
-        it("retrieves set values", function() {
-            var attributes = new Attributes({
+        it("retrieves set values", () => {
+            const attributes = new Attributes({
                 foo: {}
             });
             attributes.foo = 'foo value';
             attributes.foo.should.equal('foo value');
         });
 
-        describe("when re-set", function() {
-            it("retrieves the latest value", function() {
-                var attributes = new Attributes({
+        describe("when re-set", () => {
+            it("retrieves the latest value", () => {
+                const attributes = new Attributes({
                     foo: {}
                 });
                 attributes.foo = 'foo value';
@@ -31,9 +32,9 @@ describe("Attribute", function() {
             });
         });
 
-        describe("when set for another value", function() {
-            it("doesn't mutate the earlier value", function() {
-                var attributes = new Attributes({
+        describe("when set for another value", () => {
+            it("doesn't mutate the earlier value", () => {
+                const attributes = new Attributes({
                     foo: {}
                 });
                 attributes.foo = 'foo value';
@@ -43,88 +44,73 @@ describe("Attribute", function() {
         });
     });
 
-    describe("#validate", function() {
-        describe("when missing a mandatory attribute", function() {
-            var attributes;
-            before(function() {
-                attributes = new Attributes({
-                    foo: { mandatory: true }
-                });
+    describe("#validate", () => {
+        describe("when missing a mandatory attribute", () => {
+            const attributes = new Attributes({
+                foo: { mandatory: true }
             });
 
-            it("is not valid", function() {
+            it("is not valid", () => {
                 attributes.isValid().should.be.false;
             });
 
-            it("has errors", function() {
+            it("has errors", () => {
                 attributes.errors().should.not.be.empty;
             });
         });
 
-        describe("when all mandatory attributes are present", function() {
-            var attributes;
-            before(function() {
-                attributes = new Attributes({
-                    foo: { mandatory: true },
-                    bar: { value: undefined }
-                });
-                attributes.foo = 'foo value';
+        describe("when all mandatory attributes are present", () => {
+            const attributes = new Attributes({
+                foo: { mandatory: true },
+                bar: { value: undefined }
             });
+            attributes.foo = 'foo value';
 
-            it("is valid", function() {
+            it("is valid", () => {
                 attributes.isValid().should.be.true;
             });
 
-            it("has no error", function() {
+            it("has no error", () => {
                 attributes.errors().should.be.empty;
             });
         });
 
-        describe("when a numerical attribute is a string", function() {
-            var attributes;
-            before(function() {
-                attributes = new Attributes({
-                    foo: { value: "10foo", numerical: true }
-                });
+        describe("when a numerical attribute is a string", () => {
+            const attributes = new Attributes({
+                foo: { value: "10foo", numerical: true }
             });
 
-            it("is is not valid", function() {
+            it("is is not valid", () => {
                 attributes.isValid().should.not.be.true;
             });
 
-            it("is has errors", function() {
+            it("is has errors", () => {
                 attributes.errors().should.not.be.empty;
             });
         });
 
-        describe("when all numerical attributes are numbers", function() {
-            var attributes;
-            before(function () {
-                attributes = new Attributes({
-                    foo: { value: undefined },
-                    bar: { numerical: 10 }
-                });
-                attributes.bar = -10.0;
+        describe("when all numerical attributes are numbers", () => {
+            const attributes = new Attributes({
+                foo: { value: undefined },
+                bar: { numerical: 10 }
             });
+            attributes.bar = -10.0;
 
-            it("is valid", function() {
+            it("is valid", () => {
                 attributes.isValid().should.be.true;
             });
 
-            it("is has no errors", function() {
+            it("is has no errors", () => {
                 attributes.errors().should.be.empty;
             });
         });
 
-        describe("when a validation error is fixed", function() {
-            var attributes;
-            before(function () {
-                attributes = new Attributes({
-                    foo: { mandatory: true }
-                });
-            });
+        describe("when a validation error is fixed", () => {
+            const attributes = new Attributes({
+                foo: { mandatory: true }
+            });;
 
-            it("is valid", function() {
+            it("is valid", () => {
                 attributes.isValid().should.be.false;
                 attributes.foo = "foo value";
                 attributes.isValid().should.be.true;
@@ -132,10 +118,10 @@ describe("Attribute", function() {
         });
     });
 
-    describe("#validated", function() {
-        describe("when created", function() {
-            it("is not validated", function() {
-                var attributes = new Attributes({
+    describe("#validated", () => {
+        describe("when created", () => {
+            it("is not validated", () => {
+                const attributes = new Attributes({
                     foo: { value: undefined },
                     bar: { numerical: 10 }
                 });
@@ -143,9 +129,9 @@ describe("Attribute", function() {
             });
         });
 
-        describe("when validated after creation", function() {
-            it("is validated", function() {
-                var attributes = new Attributes({
+        describe("when validated after creation", () => {
+            it("is validated", () => {
+                const attributes = new Attributes({
                     foo: { value: undefined },
                     bar: { numerical: 10 }
                 });
@@ -154,9 +140,9 @@ describe("Attribute", function() {
             });
         });
 
-        describe("when an attribute is set", function() {
-            it("is not validated", function() {
-                var attributes = new Attributes({
+        describe("when an attribute is set", () => {
+            it("is not validated", () => {
+                const attributes = new Attributes({
                     foo: { value: undefined },
                     bar: { numerical: 10 }
                 });
@@ -166,9 +152,9 @@ describe("Attribute", function() {
             });
         });
 
-        describe("when validated after setting an attribute", function() {
-            it("is validated", function() {
-                var attributes = new Attributes({
+        describe("when validated after setting an attribute", () => {
+            it("is validated", () => {
+                const attributes = new Attributes({
                     foo: { value: undefined },
                     bar: { numerical: 10 }
                 });
