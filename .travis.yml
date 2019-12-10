@@ -1,14 +1,15 @@
 language: node_js
 node_js:
   - "6"
-  - "7"
+  - "8"
+  - "10"
+  - "12"
 services:
   - mongodb
 install:
   - npm install -g npx
   - npm install
 script:
-  - sleep 15
   - npm start &
-  - sleep 5
+  - sleep 15
   - npm test

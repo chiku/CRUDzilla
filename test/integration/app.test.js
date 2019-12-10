@@ -1,6 +1,5 @@
 'use strict';
 
-const Q = require("q");
 const should = require("should");
 const Browser = require("zombie");
 

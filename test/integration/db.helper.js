@@ -1,7 +1,6 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const Q = require('q');
 
 const connection = mongoose.createConnection('mongodb://localhost:27017/db', {
     useNewUrlParser: true,
@@ -14,7 +13,7 @@ const ProductStore = connection.model('Product');
 const helper = {
     createProduct: (options) => {
         const product = new ProductStore(options);
-        return Q.ninvoke(product.save.bind(product));
+        return product.save(product);
     },
 
     deleteProduct: (id) => ProductStore.findById(id, (error, product) => product.remove()),
