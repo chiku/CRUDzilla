@@ -24,8 +24,8 @@
     "scripts": {
         "start": "node app.js",
         "test": "npm run test:unit && npm run test:integration",
-        "test:unit": "npx mocha -R spec test/unit/*.test.js",
-        "test:integration": "npx mocha -R spec test/integration/*.test.js --timeout 5000"
+        "test:unit": "mocha -R spec test/unit/*.test.js",
+        "test:integration": "mocha -R spec test/integration/*.test.js --timeout 5000"
     },
     "version": "0.0.1"
 }
