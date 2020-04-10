@@ -1,13 +1,10 @@
 language: node_js
 node_js:
-  - "6"
-  - "8"
   - "10"
   - "12"
 services:
   - mongodb
 install:
-  - npm install -g npx
   - npm install
 script:
   - npm start &
