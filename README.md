@@ -13,21 +13,27 @@ How to
 ------
 
 * Start mongodb daemon
+
 ```shell
 mongod --nojournal --dbpath db/
 ```
 
 * Start node application
+
 ```shell
-node app.js
+npm start
 ```
 
+Visit http://localhost:3000.
+
 * Run unit tests
+
 ```shell
 npm run test:unit
 ```
 
 * Run integration tests (the server & mongodb should be up)
+
 ```shell
 npm run test:integration
 ```
