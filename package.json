@@ -7,7 +7,7 @@
         "method-override": "^3.0.0",
         "mongoose": "^5.13.20",
         "morgan": "^1.10.0",
-        "pug": "^3.0.1"
+        "pug": "^3.0.3"
     },
     "description": "A proof of concept of sharing server and client code",
     "devDependencies": {
